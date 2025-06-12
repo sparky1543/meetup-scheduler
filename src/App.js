@@ -8,6 +8,7 @@ import GroupsPage from './pages/GroupsPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 import JoinGroupPage from './pages/JoinGroupPage';
 import CreateEventPage from './pages/CreateEventPage'; // 새로 추가
+import EventParticipationPage from './pages/EventParticipationPage';
 import './App.css';
 
 function App() {
@@ -80,6 +81,15 @@ function App() {
         <Route 
           path="/join/:groupId" 
           element={<JoinGroupPage user={user} />}
+        />
+
+        <Route 
+          path="/groups/:groupId/events/:eventId" 
+          element={
+            <ProtectedRoute user={user}>
+              <EventParticipationPage user={user} onLogout={logout} />
+            </ProtectedRoute>
+          } 
         />
 
         {/* 404 페이지 */}

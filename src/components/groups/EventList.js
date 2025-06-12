@@ -12,8 +12,7 @@ const EventList = ({ group, user, isOwner }) => {
   };
 
   const handleEventClick = (eventId) => {
-    // TODO: 약속 상세/참여 페이지로 이동 (다음 단계에서 구현)
-    alert(`약속 참여 페이지로 이동: ${eventId}\n(다음 단계에서 구현예정)`);
+    navigate(`/groups/${group.id}/events/${eventId}`);
   };
 
   const handleDeleteEvent = async (eventId, eventName) => {
