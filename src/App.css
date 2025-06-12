@@ -655,3 +655,276 @@ body {
     gap: 20px;
   }
 }
+
+/* Group Detail Page Styles */
+.group-detail-header {
+  margin-bottom: 24px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #4facfe;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 16px;
+  padding: 8px 0;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.group-title-section {
+  text-align: center;
+}
+
+.group-title {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.group-subtitle {
+  margin: 0;
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.group-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Section Styles */
+.group-info-section,
+.member-list-section,
+.invite-link-section,
+.event-list-section {
+  background: #f8f9ff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e0e6ff;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.edit-btn {
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+/* Group Info Edit Form */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e6ff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #4facfe;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.edit-actions .btn {
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+}
+
+/* Group Info Content */
+.group-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-item strong {
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.info-item span {
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Member List */
+.member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e0e6ff;
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.member-name {
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.current-user-badge {
+  color: #4facfe;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.member-role {
+  font-size: 12px;
+  color: #5f6368;
+}
+
+.remove-member-btn {
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+}
+
+/* Invite Link */
+.invite-link-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.link-display {
+  position: relative;
+}
+
+.link-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e6ff;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  font-family: monospace;
+  box-sizing: border-box;
+}
+
+.copy-btn {
+  align-self: flex-start;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+}
+
+.invite-description {
+  margin: 0;
+  font-size: 14px;
+  color: #5f6368;
+  text-align: center;
+}
+
+/* Event List */
+.create-event-btn {
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+.empty-events {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-events .empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-events h4 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.empty-events p {
+  margin: 0 0 24px 0;
+  color: #5f6368;
+  line-height: 1.5;
+}
+
+.create-first-event-btn {
+  padding: 12px 20px !important;
+}
+
+/* Error Pages */
+.error-page,
+.access-denied {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.error-icon,
+.denied-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.error-page h2,
+.access-denied h2 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.error-page p,
+.access-denied p {
+  margin: 0 0 24px 0;
+  color: #5f6368;
+  line-height: 1.5;
+}

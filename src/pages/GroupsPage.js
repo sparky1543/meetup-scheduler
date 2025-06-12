@@ -7,7 +7,7 @@ import EmptyGroups from '../components/groups/EmptyGroups';
 import Button from '../components/common/Button';
 import { useGroups } from '../hooks/useGroups';
 
-const GroupsPage = ({ user, onLogout }) => {
+const GroupsPage = ({ user, onLogout, onGroupClick }) => {
   const { groups, loading, createGroup, deleteGroup } = useGroups(user);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [error, setError] = useState('');
@@ -35,8 +35,7 @@ const GroupsPage = ({ user, onLogout }) => {
   };
 
   const handleGroupClick = (groupId) => {
-    // TODO: 모임 상세 페이지로 이동
-    alert(`모임 상세 페이지로 이동: ${groupId}\n(다음 단계에서 구현예정)`);
+    onGroupClick(groupId); // App.js로 전달
   };
 
   if (loading) {
