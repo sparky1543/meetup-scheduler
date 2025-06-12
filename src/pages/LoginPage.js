@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Header from '../components/layout/Header';
 import LoginForm from '../components/auth/LoginForm';
@@ -6,10 +7,17 @@ import RegisterForm from '../components/auth/RegisterForm';
 import NicknameModal from '../components/auth/NicknameModal';
 import { mockAuth, getErrorMessage, generateUserNumber } from '../utils/auth';
 
-const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
+const LoginPage = ({ onAuthSuccess }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const [currentPage, setCurrentPage] = useState('login');
   const [showNicknameModal, setShowNicknameModal] = useState(false);
   const [tempUser, setTempUser] = useState(null);
+
+  // 로그인 후 이동할 경로 확인
+  const from = location.state?.from || '/groups';
+  const isInviteLink = from.startsWith('/join/');
 
   const handleEmailLogin = async (email, password) => {
     const userCredential = await mockAuth.signInWithEmail(email, password);
@@ -24,6 +32,8 @@ const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
     };
 
     onAuthSuccess(userData);
+    // React Router의 navigate 사용
+    navigate(from, { replace: true });
   };
 
   const handleEmailRegister = async (email, password, nickname) => {
@@ -39,6 +49,7 @@ const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
     };
 
     onAuthSuccess(userData);
+    navigate(from, { replace: true });
   };
 
   const handleGoogleLogin = async () => {
@@ -57,6 +68,7 @@ const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
         createdAt: new Date().toISOString()
       };
       onAuthSuccess(userData);
+      navigate(from, { replace: true });
     }
   };
 
@@ -77,6 +89,7 @@ const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
     onAuthSuccess(userData);
     setShowNicknameModal(false);
     setTempUser(null);
+    navigate(from, { replace: true });
   };
 
   return (
@@ -87,7 +100,8 @@ const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
       />
       
       <div className="content">
-        {showInviteMessage && (
+        {/* 초대 메시지 표시 */}
+        {isInviteLink && (
           <div className="invite-message">
             <div className="invite-notice">
               <span className="notice-icon">📩</span>
@@ -98,6 +112,7 @@ const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
             </div>
           </div>
         )}
+
         {currentPage === 'login' ? (
           <LoginForm
             onLogin={handleEmailLogin}

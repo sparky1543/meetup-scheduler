@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Header from '../components/layout/Header';
 import GroupCard from '../components/groups/GroupCard';
@@ -7,7 +8,8 @@ import EmptyGroups from '../components/groups/EmptyGroups';
 import Button from '../components/common/Button';
 import { useGroups } from '../hooks/useGroups';
 
-const GroupsPage = ({ user, onLogout, onGroupClick }) => {
+const GroupsPage = ({ user, onLogout }) => {
+  const navigate = useNavigate();
   const { groups, loading, createGroup, deleteGroup } = useGroups(user);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [error, setError] = useState('');
@@ -35,7 +37,8 @@ const GroupsPage = ({ user, onLogout, onGroupClick }) => {
   };
 
   const handleGroupClick = (groupId) => {
-    onGroupClick(groupId); // App.js로 전달
+    // React Router의 navigate 사용
+    navigate(`/groups/${groupId}`);
   };
 
   if (loading) {

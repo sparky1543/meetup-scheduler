@@ -140,9 +140,8 @@ export const generateGroupId = () => {
   
   // 초대 링크 생성
   export const generateInviteLink = (groupId) => {
-    // 실제 배포시에는 실제 도메인 사용
     const baseUrl = window.location.origin;
-    return `${baseUrl}?groupId=${groupId}`;
+    return `${baseUrl}/join/${groupId}`; // 깔끔한 URL 구조
   };
   
   // 모임 정보 업데이트 (모임장만)
@@ -173,12 +172,6 @@ export const generateGroupId = () => {
     saveGroupsToStorage(allGroups);
     
     return group;
-  };
-
-  // URL에서 groupId 파라미터 추출
-  export const getGroupIdFromUrl = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('groupId');
   };
   
   // 초대 링크 유효성 검증

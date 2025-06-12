@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Header from '../components/layout/Header';
 import InvitePreview from '../components/invite/InvitePreview';
@@ -7,13 +8,10 @@ import InviteError from '../components/invite/InviteError';
 import Button from '../components/common/Button';
 import { useInvite } from '../hooks/useInvite';
 
-const JoinGroupPage = ({ 
-  groupId, 
-  user, 
-  onJoinSuccess, 
-  onLoginRequired, 
-  onGoHome 
-}) => {
+const JoinGroupPage = ({ user }) => {
+  const { groupId } = useParams(); // URL 파라미터에서 groupId 추출
+  const navigate = useNavigate();
+  
   const { 
     inviteData, 
     loading, 
@@ -28,7 +26,7 @@ const JoinGroupPage = ({
     // 참여 성공 시 모임 상세 페이지로 이동
     if (result.success) {
       setTimeout(() => {
-        onJoinSuccess(groupId);
+        navigate(`/groups/${groupId}`);
       }, 1500); // 1.5초 후 이동 (알림 확인 시간)
     }
     
@@ -37,6 +35,15 @@ const JoinGroupPage = ({
 
   const handleRetry = () => {
     window.location.reload();
+  };
+
+  const handleLoginRequired = () => {
+    // 현재 URL을 state로 전달해서 로그인 후 돌아올 수 있게 함
+    navigate('/login', { state: { from: `/join/${groupId}` } });
+  };
+
+  const handleGoHome = () => {
+    navigate(user ? '/groups' : '/');
   };
 
   if (loading) {
@@ -61,7 +68,7 @@ const JoinGroupPage = ({
           <InviteError
             error={error || '초대 정보를 불러올 수 없습니다.'}
             onRetry={handleRetry}
-            onGoHome={onGoHome}
+            onGoHome={handleGoHome}
           />
         </div>
       </Layout>
@@ -83,14 +90,14 @@ const JoinGroupPage = ({
             onJoin={handleJoin}
             isAlreadyMember={isAlreadyMember}
             isLoggedIn={!!user}
-            onLoginRequired={onLoginRequired}
+            onLoginRequired={handleLoginRequired}
             groupName={inviteData.group.name}
           />
           
           {isAlreadyMember && (
             <div className="member-actions">
               <Button
-                onClick={() => onJoinSuccess(groupId)}
+                onClick={() => navigate(`/groups/${groupId}`)}
                 variant="primary"
                 className="go-to-group-btn"
               >
@@ -101,7 +108,7 @@ const JoinGroupPage = ({
           
           <div className="invite-footer">
             <Button
-              onClick={onGoHome}
+              onClick={handleGoHome}
               variant="secondary"
               className="home-btn"
             >

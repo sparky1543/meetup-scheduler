@@ -1,98 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import PublicRoute from './components/auth/PublicRoute';
 import LoginPage from './pages/LoginPage';
 import GroupsPage from './pages/GroupsPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 import JoinGroupPage from './pages/JoinGroupPage';
-import { getGroupIdFromUrl } from './utils/groups';
 import './App.css';
 
 function App() {
   const { user, loading, saveUser, logout } = useAuth();
-  const [currentPage, setCurrentPage] = useState('loading'); 
-  const [selectedGroupId, setSelectedGroupId] = useState(null);
-  const [inviteGroupId, setInviteGroupId] = useState(null);
 
-  // 앱 초기화 및 URL 파라미터 확인
-  useEffect(() => {
-    if (loading) return; // 인증 로딩 중이면 대기
-
-    // URL에서 groupId 파라미터 확인 (초대 링크)
-    const groupId = getGroupIdFromUrl();
-    
-    if (groupId) {
-      setInviteGroupId(groupId);
-      
-      if (user) {
-        // 로그인된 사용자면 바로 초대 페이지로
-        setCurrentPage('join');
-      } else {
-        // 비로그인 사용자면 로그인 페이지로 (초대 정보 유지)
-        setCurrentPage('login');
-      }
-    } else {
-      // 일반 접근
-      if (user) {
-        setCurrentPage('groups');
-      } else {
-        setCurrentPage('login');
-      }
-    }
-  }, [user, loading]);
-
-  // 로그인 성공 후 처리
-  const handleAuthSuccess = (userData) => {
-    saveUser(userData);
-    
-    // 초대 링크로 온 경우 초대 페이지로, 아니면 모임 목록으로
-    if (inviteGroupId) {
-      setCurrentPage('join');
-    } else {
-      setCurrentPage('groups');
-    }
-  };
-
-  // 페이지 네비게이션 함수들
-  const handleGroupClick = (groupId) => {
-    setSelectedGroupId(groupId);
-    setCurrentPage('groupDetail');
-  };
-
-  const handleBackToGroups = () => {
-    setCurrentPage('groups');
-    setSelectedGroupId(null);
-    
-    // URL 파라미터 제거
-    if (inviteGroupId) {
-      window.history.replaceState({}, document.title, window.location.pathname);
-      setInviteGroupId(null);
-    }
-  };
-
-  const handleJoinSuccess = (groupId) => {
-    // 모임 참여 성공 후 해당 모임 상세 페이지로 이동
-    setSelectedGroupId(groupId);
-    setCurrentPage('groupDetail');
-    
-    // URL 파라미터 제거
-    window.history.replaceState({}, document.title, window.location.pathname);
-    setInviteGroupId(null);
-  };
-
-  const handleLoginRequired = () => {
-    // 로그인이 필요한 경우 로그인 페이지로 (초대 정보 유지)
-    setCurrentPage('login');
-  };
-
-  const handleGoHome = () => {
-    // 홈으로 가기 (초대 정보 제거)
-    setCurrentPage(user ? 'groups' : 'login');
-    window.history.replaceState({}, document.title, window.location.pathname);
-    setInviteGroupId(null);
-  };
-
-  // 로딩 중
-  if (currentPage === 'loading') {
+  if (loading) {
     return (
       <div className="container">
         <div className="mobile-wrapper">
@@ -105,49 +25,78 @@ function App() {
     );
   }
 
-  // 로그인이 필요한 경우 (user가 null인 경우)
-  if (!user) {
-    return (
-      <LoginPage 
-        onAuthSuccess={handleAuthSuccess}
-        showInviteMessage={!!inviteGroupId}
-      />
-    );
-  }
+  return (
+    <Router>
+      <Routes>
+        {/* 홈 라우트 - 로그인 상태에 따라 리다이렉트 */}
+        <Route 
+          path="/" 
+          element={
+            user ? <Navigate to="/groups" replace /> : <Navigate to="/login" replace />
+          } 
+        />
 
-  // 로그인된 사용자의 페이지 라우팅
-  switch (currentPage) {
-    case 'join':
-      return (
-        <JoinGroupPage
-          groupId={inviteGroupId}
-          user={user}
-          onJoinSuccess={handleJoinSuccess}
-          onLoginRequired={handleLoginRequired}
-          onGoHome={handleGoHome}
+        {/* 로그인 페이지 - 로그인된 사용자는 접근 불가 */}
+        <Route 
+          path="/login" 
+          element={
+            <PublicRoute user={user}>
+              <LoginPage onAuthSuccess={saveUser} />
+            </PublicRoute>
+          } 
         />
-      );
 
-    case 'groupDetail':
-      return (
-        <GroupDetailPage
-          groupId={selectedGroupId}
-          user={user}
-          onBack={handleBackToGroups}
-          onLogout={logout}
+        {/* 보호된 라우트들 - 로그인 필요 */}
+        <Route 
+          path="/groups" 
+          element={
+            <ProtectedRoute user={user}>
+              <GroupsPage user={user} onLogout={logout} />
+            </ProtectedRoute>
+          } 
         />
-      );
-    
-    case 'groups':
-    default:
-      return (
-        <GroupsPage
-          user={user}
-          onLogout={logout}
-          onGroupClick={handleGroupClick}
+
+        <Route 
+          path="/groups/:groupId" 
+          element={
+            <ProtectedRoute user={user}>
+              <GroupDetailPage user={user} onLogout={logout} />
+            </ProtectedRoute>
+          } 
         />
-      );
-  }
+
+        {/* 초대 페이지 - 로그인 불필요 (내부에서 처리) */}
+        <Route 
+          path="/join/:groupId" 
+          element={<JoinGroupPage user={user} />}
+        />
+
+        {/* 404 페이지 */}
+        <Route 
+          path="*" 
+          element={
+            <div className="container">
+              <div className="mobile-wrapper">
+                <div className="content">
+                  <div className="error-page">
+                    <div className="error-icon">🔍</div>
+                    <h2>페이지를 찾을 수 없어요</h2>
+                    <p>요청하신 페이지가 존재하지 않습니다.</p>
+                    <button 
+                      onClick={() => window.location.href = '/'}
+                      className="btn btn-primary"
+                    >
+                      홈으로 가기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          } 
+        />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
