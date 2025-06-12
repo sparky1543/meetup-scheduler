@@ -9,7 +9,7 @@ import './App.css';
 
 function App() {
   const { user, loading, saveUser, logout } = useAuth();
-  const [currentPage, setCurrentPage] = useState('loading'); // 'loading' | 'login' | 'groups' | 'groupDetail' | 'join'
+  const [currentPage, setCurrentPage] = useState('loading'); 
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const [inviteGroupId, setInviteGroupId] = useState(null);
 
@@ -105,7 +105,17 @@ function App() {
     );
   }
 
-  // 페이지 라우팅
+  // 로그인이 필요한 경우 (user가 null인 경우)
+  if (!user) {
+    return (
+      <LoginPage 
+        onAuthSuccess={handleAuthSuccess}
+        showInviteMessage={!!inviteGroupId}
+      />
+    );
+  }
+
+  // 로그인된 사용자의 페이지 라우팅
   switch (currentPage) {
     case 'join':
       return (
@@ -129,20 +139,12 @@ function App() {
       );
     
     case 'groups':
+    default:
       return (
         <GroupsPage
           user={user}
           onLogout={logout}
           onGroupClick={handleGroupClick}
-        />
-      );
-
-    case 'login':
-    default:
-      return (
-        <LoginPage 
-          onAuthSuccess={handleAuthSuccess}
-          showInviteMessage={!!inviteGroupId}
         />
       );
   }
