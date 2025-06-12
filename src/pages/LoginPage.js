@@ -6,7 +6,7 @@ import RegisterForm from '../components/auth/RegisterForm';
 import NicknameModal from '../components/auth/NicknameModal';
 import { mockAuth, getErrorMessage, generateUserNumber } from '../utils/auth';
 
-const LoginPage = ({ onAuthSuccess }) => {
+const LoginPage = ({ onAuthSuccess, showInviteMessage }) => {
   const [currentPage, setCurrentPage] = useState('login');
   const [showNicknameModal, setShowNicknameModal] = useState(false);
   const [tempUser, setTempUser] = useState(null);
@@ -87,6 +87,17 @@ const LoginPage = ({ onAuthSuccess }) => {
       />
       
       <div className="content">
+        {showInviteMessage && (
+          <div className="invite-message">
+            <div className="invite-notice">
+              <span className="notice-icon">📩</span>
+              <div className="notice-content">
+                <h3>모임 초대를 받으셨네요!</h3>
+                <p>로그인 후 모임에 참여할 수 있습니다.</p>
+              </div>
+            </div>
+          </div>
+        )}
         {currentPage === 'login' ? (
           <LoginForm
             onLogin={handleEmailLogin}

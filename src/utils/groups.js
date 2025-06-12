@@ -174,3 +174,41 @@ export const generateGroupId = () => {
     
     return group;
   };
+
+  // URL에서 groupId 파라미터 추출
+  export const getGroupIdFromUrl = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('groupId');
+  };
+  
+  // 초대 링크 유효성 검증
+  export const validateInviteLink = (groupId) => {
+    if (!groupId) {
+      return { valid: false, error: '초대 링크가 유효하지 않습니다.' };
+    }
+  
+    const group = getGroupById(groupId);
+    if (!group) {
+      return { valid: false, error: '존재하지 않거나 삭제된 모임입니다.' };
+    }
+  
+    return { valid: true, group };
+  };
+  
+  // 사용자가 이미 모임 멤버인지 확인
+  export const isUserInGroup = (groupId, userId) => {
+    const group = getGroupById(groupId);
+    return group && group.members && group.members[userId];
+  };
+  
+  // 초대 링크 통계 (선택적 기능)
+  export const getInviteStats = (groupId) => {
+    const group = getGroupById(groupId);
+    if (!group) return null;
+  
+    return {
+      memberCount: getMemberCount(group),
+      createdDate: new Date(group.createdAt).toLocaleDateString('ko-KR'),
+      ownerName: Object.values(group.members).find(member => member.role === 'owner')?.nickname
+    };
+  };

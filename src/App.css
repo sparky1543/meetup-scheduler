@@ -928,3 +928,224 @@ body {
   color: #5f6368;
   line-height: 1.5;
 }
+
+.invite-message {
+  margin-bottom: 30px;
+}
+
+.invite-notice {
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+  border: 2px solid #90ee90;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.notice-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.notice-content h3 {
+  margin: 0 0 4px 0;
+  color: #2d5f3f;
+  font-size: 16px;
+}
+
+.notice-content p {
+  margin: 0;
+  color: #4a7c59;
+  font-size: 14px;
+}
+
+/* Join Group Page */
+.join-group-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 0 20px 0;
+}
+
+/* Invite Preview */
+.invite-preview {
+  text-align: center;
+}
+
+.invite-header {
+  margin-bottom: 24px;
+}
+
+.invite-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.invite-header h2 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.invite-header p {
+  margin: 0;
+  color: #5f6368;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.group-preview-card {
+  background: #f8f9ff;
+  border: 2px solid #e0e6ff;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+}
+
+.preview-header {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.preview-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.preview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e0e6ff;
+}
+
+.preview-label {
+  font-weight: 600;
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.preview-value {
+  color: #333;
+  font-size: 14px;
+}
+
+/* Join Button */
+.join-actions {
+  text-align: center;
+}
+
+.join-btn {
+  width: 100%;
+  padding: 18px !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px;
+}
+
+.login-notice {
+  margin: 0;
+  font-size: 14px;
+  color: #5f6368;
+}
+
+.join-status {
+  text-align: center;
+  padding: 20px;
+}
+
+.already-member {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #e8f5e8;
+  border: 2px solid #90ee90;
+  border-radius: 12px;
+  padding: 16px;
+  color: #2d5f3f;
+  font-weight: 600;
+}
+
+.status-icon {
+  font-size: 20px;
+}
+
+/* Member Actions */
+.member-actions {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.go-to-group-btn {
+  padding: 14px 24px !important;
+  font-size: 16px !important;
+}
+
+/* Invite Footer */
+.invite-footer {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #e0e6ff;
+}
+
+.home-btn {
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+}
+
+/* Invite Error */
+.invite-error {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.error-content .error-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.error-content h2 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.error-content p {
+  margin: 0 0 30px 0;
+  color: #5f6368;
+  line-height: 1.5;
+}
+
+.error-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.retry-btn,
+.error-actions .home-btn {
+  min-width: 150px;
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .error-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
