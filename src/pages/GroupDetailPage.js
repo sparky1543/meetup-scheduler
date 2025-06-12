@@ -8,10 +8,10 @@ import MemberList from '../components/groups/MemberList';
 import InviteLink from '../components/groups/InviteLink';
 import EventList from '../components/groups/EventList';
 import Button from '../components/common/Button';
-import { useGroupMembers } from '../hooks/useGroupMembers';
+import { useFirebaseGroupMembers } from '../hooks/useFirebaseGroupMembers';
 
 const GroupDetailPage = ({ user, onLogout }) => {
-  const { groupId } = useParams(); // URL 파라미터에서 groupId 추출
+  const { groupId } = useParams();
   const navigate = useNavigate();
   
   const { 
@@ -22,7 +22,7 @@ const GroupDetailPage = ({ user, onLogout }) => {
     isMember, 
     removeMember, 
     updateGroup 
-  } = useGroupMembers(groupId, user);
+  } = useFirebaseGroupMembers(groupId, user);
 
   const handleRemoveMember = async (userId) => {
     try {
@@ -93,6 +93,8 @@ const GroupDetailPage = ({ user, onLogout }) => {
     );
   }
 
+  const memberCount = Object.keys(group.members || {}).length;
+
   return (
     <Layout>
       <Header title="🏝️ 모임 스케줄러" />
@@ -106,7 +108,7 @@ const GroupDetailPage = ({ user, onLogout }) => {
               {group.name}
             </h1>
             <p className="group-subtitle">
-              {isOwner ? '모임장' : '멤버'} • 멤버 {Object.keys(group.members).length}명
+              {isOwner ? '모임장' : '멤버'} • 멤버 {memberCount}명
             </p>
           </div>
         </div>
@@ -135,6 +137,14 @@ const GroupDetailPage = ({ user, onLogout }) => {
         </div>
 
         <div className="page-actions">
+          <Button
+            onClick={() => navigate('/profile')}
+            variant="secondary"
+            className="profile-btn"
+          >
+            👤 마이페이지
+          </Button>
+          
           <Button
             onClick={onLogout}
             variant="secondary"

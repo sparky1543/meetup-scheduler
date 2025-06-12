@@ -6,39 +6,37 @@ import GroupCard from '../components/groups/GroupCard';
 import CreateGroupModal from '../components/groups/CreateGroupModal';
 import EmptyGroups from '../components/groups/EmptyGroups';
 import Button from '../components/common/Button';
-import { useGroups } from '../hooks/useGroups';
+import { useFirebaseGroups } from '../hooks/useFirebaseGroups';
 
 const GroupsPage = ({ user, onLogout }) => {
   const navigate = useNavigate();
-  const { groups, loading, createGroup, deleteGroup } = useGroups(user);
+  const { groups, loading, error, createGroup, deleteGroup } = useFirebaseGroups(user);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [error, setError] = useState('');
 
   const handleCreateGroup = async (groupData) => {
     try {
-      setError('');
       const newGroup = await createGroup(groupData);
       alert(`'${newGroup.name}' 모임이 생성되었습니다! 🎉`);
     } catch (error) {
-      setError(error.message);
-      throw error;
+      throw error; // CreateGroupModal에서 에러 처리
     }
   };
 
   const handleDeleteGroup = async (groupId) => {
     try {
-      setError('');
       await deleteGroup(groupId);
       alert('모임이 삭제되었습니다.');
     } catch (error) {
-      setError(error.message);
       alert(`삭제 실패: ${error.message}`);
     }
   };
 
   const handleGroupClick = (groupId) => {
-    // React Router의 navigate 사용
     navigate(`/groups/${groupId}`);
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
   };
 
   if (loading) {
@@ -63,15 +61,17 @@ const GroupsPage = ({ user, onLogout }) => {
         <div className="groups-section">
           <div className="section-header">
             <h2>📋 내 모임 ({groups.length}개)</h2>
-            {groups.length > 0 && (
-              <Button
-                onClick={() => setShowCreateModal(true)}
-                variant="primary"
-                className="add-group-btn"
-              >
-                ➕ 모임 만들기
-              </Button>
-            )}
+            <div className="header-actions">
+              {groups.length > 0 && (
+                <Button
+                  onClick={() => setShowCreateModal(true)}
+                  variant="primary"
+                  className="add-group-btn"
+                >
+                  ➕ 모임 만들기
+                </Button>
+              )}
+            </div>
           </div>
 
           {error && <div className="error section-error">{error}</div>}
@@ -94,6 +94,14 @@ const GroupsPage = ({ user, onLogout }) => {
         </div>
 
         <div className="page-actions">
+          <Button
+            onClick={handleProfileClick}
+            variant="secondary"
+            className="profile-btn"
+          >
+            👤 마이페이지
+          </Button>
+          
           <Button
             onClick={onLogout}
             variant="secondary"

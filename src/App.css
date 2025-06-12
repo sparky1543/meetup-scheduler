@@ -2260,3 +2260,186 @@ body {
     height: 28px;
   }
 }
+
+/* Profile Page Styles */
+.profile-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.profile-header h1 {
+  margin: 16px 0 8px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Profile Card */
+.profile-card {
+  background: #f8f9ff;
+  border: 2px solid #e0e6ff;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.profile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-card-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.edit-profile-btn {
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+/* Profile Info Display */
+.info-display {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e0e6ff;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.info-value {
+  color: #333;
+  font-size: 14px;
+  font-family: monospace;
+}
+
+/* Edit Form */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.edit-actions .btn {
+  min-width: 80px;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+}
+
+/* Account Management */
+.account-management {
+  background: #f8f9ff;
+  border: 2px solid #e0e6ff;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.account-management h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.management-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-btn,
+.logout-btn {
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+}
+
+/* Danger Zone */
+.danger-zone {
+  background: #fff5f5;
+  border: 2px solid #fed7d7;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.danger-zone h4 {
+  margin: 0 0 8px 0;
+  color: #e53e3e;
+  font-size: 16px;
+}
+
+.danger-zone p {
+  margin: 0 0 16px 0;
+  color: #742a2a;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.delete-account-btn {
+  background: #e53e3e !important;
+  color: white !important;
+  border-color: #e53e3e !important;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+}
+
+.delete-account-btn:hover {
+  background: #c53030 !important;
+  border-color: #c53030 !important;
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Responsive Updates */
+@media (max-width: 640px) {
+  .profile-card-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .edit-actions {
+    flex-direction: column;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}

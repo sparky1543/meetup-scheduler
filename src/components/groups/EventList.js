@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
-import { useEvents } from '../../hooks/useEvents';
+import { useFirebaseEvents } from '../../hooks/useFirebaseEvents';
 
 const EventList = ({ group, user, isOwner }) => {
   const navigate = useNavigate();
-  const { events, loading, deleteEvent } = useEvents(group.id, user, group.createdBy);
+  const { events, loading, error, deleteEvent } = useFirebaseEvents(group.id, user, group.createdBy);
 
   const handleCreateEvent = () => {
     navigate(`/groups/${group.id}/create-event`);
@@ -36,6 +36,24 @@ const EventList = ({ group, user, isOwner }) => {
           <div className="spinner-small"></div>
           <span>약속 목록을 불러오는 중...</span>
         </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="event-list-section">
+        <div className="section-header">
+          <h3>📅 약속 목록</h3>
+          <Button
+            onClick={handleCreateEvent}
+            variant="primary"
+            className="create-event-btn"
+          >
+            ➕ 새 약속 만들기
+          </Button>
+        </div>
+        <div className="error">{error}</div>
       </div>
     );
   }
@@ -117,7 +135,7 @@ const EventList = ({ group, user, isOwner }) => {
                       👥 {responseCount}명 응답
                     </span>
                     <span className="created-by">
-                      만든이: {event.createdBy === user.uid ? '나' : '멤버'}
+                      만든이: {event.createdBy === user.uid ? '나' : event.createdByNickname || '멤버'}
                     </span>
                   </div>
                 </div>
