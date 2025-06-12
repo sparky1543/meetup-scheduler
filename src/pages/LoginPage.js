@@ -15,8 +15,11 @@ const LoginPage = ({ onAuthSuccess }) => {
   const [showNicknameModal, setShowNicknameModal] = useState(false);
   const [tempUser, setTempUser] = useState(null);
 
-  // 로그인 후 이동할 경로 확인
-  const from = location.state?.from || '/groups';
+  // 로그인 후 이동할 경로 확인 (안전하게 처리)
+  const from = (location.state?.from && typeof location.state.from === 'string') 
+    ? location.state.from 
+    : '/groups';
+  
   const isInviteLink = from.startsWith('/join/');
 
   const handleEmailLogin = async (email, password) => {
