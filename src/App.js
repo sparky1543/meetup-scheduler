@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import GroupsPage from './pages/GroupsPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 import JoinGroupPage from './pages/JoinGroupPage';
+import CreateEventPage from './pages/CreateEventPage'; // 새로 추가
 import './App.css';
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* 홈 라우트 - 로그인 상태에 따라 리다이렉트 */}
+        {/* 홈 라우트 */}
         <Route 
           path="/" 
           element={
@@ -36,7 +37,7 @@ function App() {
           } 
         />
 
-        {/* 로그인 페이지 - 로그인된 사용자는 접근 불가 */}
+        {/* 로그인 페이지 */}
         <Route 
           path="/login" 
           element={
@@ -46,7 +47,7 @@ function App() {
           } 
         />
 
-        {/* 보호된 라우트들 - 로그인 필요 */}
+        {/* 보호된 라우트들 */}
         <Route 
           path="/groups" 
           element={
@@ -65,7 +66,17 @@ function App() {
           } 
         />
 
-        {/* 초대 페이지 - 로그인 불필요 (내부에서 처리) */}
+        {/* 약속 생성 페이지 - 새로 추가 */}
+        <Route 
+          path="/groups/:groupId/create-event" 
+          element={
+            <ProtectedRoute user={user}>
+              <CreateEventPage user={user} onLogout={logout} />
+            </ProtectedRoute>
+          } 
+        />
+
+        {/* 초대 페이지 */}
         <Route 
           path="/join/:groupId" 
           element={<JoinGroupPage user={user} />}

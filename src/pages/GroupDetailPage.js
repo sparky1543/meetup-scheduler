@@ -24,11 +24,6 @@ const GroupDetailPage = ({ user, onLogout }) => {
     updateGroup 
   } = useGroupMembers(groupId, user);
 
-  const handleCreateEvent = () => {
-    // TODO: 약속 생성 페이지로 이동 (다음 단계에서 구현)
-    alert('약속 생성 기능은 다음 단계에서 구현됩니다! 🚀');
-  };
-
   const handleRemoveMember = async (userId) => {
     try {
       await removeMember(userId);
@@ -134,7 +129,8 @@ const GroupDetailPage = ({ user, onLogout }) => {
           
           <EventList 
             group={group} 
-            onCreateEvent={handleCreateEvent}
+            user={user}
+            isOwner={isOwner}
           />
         </div>
 

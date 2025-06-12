@@ -1,3 +1,5 @@
+import { getGroupEvents } from './events';
+
 // 랜덤 그룹 ID 생성 (8자리 영숫자)
 export const generateGroupId = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -75,7 +77,13 @@ export const generateGroupId = () => {
   
   // 모임 약속 수 계산 (현재는 0, 나중에 구현)
   export const getEventCount = (group) => {
-    return 0; // TODO: 약속 기능 구현 후 실제 개수 반환
+    try {
+      const events = getGroupEvents(group.id);
+      return events.length;
+    } catch (error) {
+      console.error('약속 개수 계산 오류:', error);
+      return 0;
+    }
   };
 
   // 특정 모임 정보 가져오기
