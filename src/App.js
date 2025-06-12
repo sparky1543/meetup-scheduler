@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from './hooks/useAuth';
 import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
+import GroupsPage from './pages/GroupsPage';
 import './App.css';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       {user ? (
-        <MainPage user={user} onLogout={logout} />
+        <GroupsPage user={user} onLogout={logout} />
       ) : (
         <LoginPage onAuthSuccess={saveUser} />
       )}
